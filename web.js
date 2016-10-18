@@ -4,6 +4,9 @@ var fromtimestamp = require('./handlers/fromtimestamp');
 var gettimestamp = require('./handlers/gettimestamp');
 var gettime = require('./handlers/gettime');
 var fromtime = require('./handlers/fromtime');
+
+var color_random = require('./handlers/color_random');
+var color = require('./handlers/color');
 const server = new Hapi.Server();
 const port = 2222;
 server.connection({
@@ -23,6 +26,7 @@ server.register(require('inert'), (err) => {
             reply.file('./public/index.html');
         }
     });*/
+    /* timestamp */
     server.route({
         method: 'GET',
         path: '/api/timestamp',
@@ -43,6 +47,18 @@ server.register(require('inert'), (err) => {
         path: '/api/time/{time}',
         handler: fromtime
     });
+    /* color */
+    server.route({
+        method: 'GET',
+        path: '/api/color',
+        handler: color_random
+    });
+    server.route({
+        method: 'GET',
+        path: '/api/color/{color}',
+        handler: color
+    });
+
     server.route({
         method: 'GET',
         path: '/{param*}',
